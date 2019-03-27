@@ -11,7 +11,7 @@
  Target Server Version : 100135
  File Encoding         : 65001
 
- Date: 27/03/2019 16:56:40
+ Date: 28/03/2019 00:25:20
 */
 
 SET NAMES utf8mb4;
@@ -33,20 +33,7 @@ INSERT INTO `test_roles_permissions` VALUES ('admin', 'user:add');
 INSERT INTO `test_roles_permissions` VALUES ('admin', 'user:delete');
 INSERT INTO `test_roles_permissions` VALUES ('admin', 'admin:update');
 INSERT INTO `test_roles_permissions` VALUES ('user', 'user:update');
-
--- ----------------------------
--- Table structure for test_user
--- ----------------------------
-DROP TABLE IF EXISTS `test_user`;
-CREATE TABLE `test_user`  (
-  `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of test_user
--- ----------------------------
-INSERT INTO `test_user` VALUES ('sun', '123');
+INSERT INTO `test_roles_permissions` VALUES ('super', 'admin:add');
 
 -- ----------------------------
 -- Table structure for test_user_roles
@@ -62,6 +49,20 @@ CREATE TABLE `test_user_roles`  (
 -- ----------------------------
 INSERT INTO `test_user_roles` VALUES ('sun', 'admin');
 INSERT INTO `test_user_roles` VALUES ('sun', 'user');
+
+-- ----------------------------
+-- Table structure for test_users
+-- ----------------------------
+DROP TABLE IF EXISTS `test_users`;
+CREATE TABLE `test_users`  (
+  `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of test_users
+-- ----------------------------
+INSERT INTO `test_users` VALUES ('sun', '1d7b217127d82ea1eac7e3b92090a463');
 
 -- ----------------------------
 -- Table structure for user_roles
