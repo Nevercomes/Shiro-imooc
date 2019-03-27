@@ -12,6 +12,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class CustomRealm extends AuthorizingRealm {
     Map<String, String> userMap = new HashMap();
     Set<String> roles = new HashSet<String>();
     Set<String> permissions = new HashSet<String>();
+
     {
         userMap.put("sun", "1d7b217127d82ea1eac7e3b92090a463");
         roles.add("admin");
@@ -61,7 +63,7 @@ public class CustomRealm extends AuthorizingRealm {
 
         // 1. 从数据库验证(模拟)
         String password = getPasswordByUsername(username);
-        if(password == null) {
+        if (password == null) {
             return null;
         }
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo("sun", password, "customRealm");
@@ -79,5 +81,4 @@ public class CustomRealm extends AuthorizingRealm {
         Md5Hash md5Hash = new Md5Hash("123", "zaq");
         System.out.println(md5Hash.toString());
     }
-
 }

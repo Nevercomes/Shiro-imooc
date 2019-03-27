@@ -1,5 +1,7 @@
 package com.nevercome.shiroweb.realm;
 
+import com.nevercome.shiroweb.dao.UserDao;
+import com.nevercome.shiroweb.entity.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -10,32 +12,32 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CustomRealm extends AuthorizingRealm {
 
-    Map<String, String> userMap = new HashMap();
-    Set<String> roles = new HashSet<String>();
-    Set<String> permissions = new HashSet<String>();
-    {
-        userMap.put("sun", "1d7b217127d82ea1eac7e3b92090a463");
-        roles.add("admin");
-        roles.add("user");
-        permissions.add("user:add");
-        permissions.add("admin:add");
-        super.setName("customRealm");
-    }
+    @Autowired
+    private UserDao userDao;
+//    Map<String, String> userMap = new HashMap();
+//    Set<String> roles = new HashSet<String>();
+//    Set<String> permissions = new HashSet<String>();
+//    {
+//        userMap.put("sun", "1d7b217127d82ea1eac7e3b92090a463");
+//        roles.add("admin");
+//        roles.add("user");
+//        permissions.add("user:add");
+//        permissions.add("admin:add");
+//        super.setName("customRealm");
+//    }
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
         String username = (String) principalCollection.getPrimaryPrincipal();
 //        从数据库或者缓存中获取角色信息
         Set<String> roles = getRolesByUsername(username);
-        Set<String> permissions = getRolesByPermissions(username);
+        Set<String> permissions = getRolesByUsername(username);
 
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -43,14 +45,6 @@ public class CustomRealm extends AuthorizingRealm {
         simpleAuthorizationInfo.setRoles(roles);
 
         return simpleAuthorizationInfo;
-    }
-
-    private Set<String> getRolesByPermissions(String username) {
-        return permissions;
-    }
-
-    private Set<String> getRolesByUsername(String username) {
-        return roles;
     }
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
@@ -63,13 +57,29 @@ public class CustomRealm extends AuthorizingRealm {
         if(password == null) {
             return null;
         }
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo("sun", password, "customRealm");
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, "customRealm");
         simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes("zaq"));
         return simpleAuthenticationInfo;
     }
 
     private String getPasswordByUsername(String username) {
-        return userMap.get(username);
+        User user = userDao.getUserByUsername(username);
+        if(user != null) {
+            return user.getPassword();
+        }
+        return null;
+    }
+
+    private Set<String> getRolesByUsername(String username) {
+        List<String> list = userDao.getRolesByUsername(username);
+        Set<String> roles = new HashSet<String>(list);
+        return roles;
+    }
+
+    private Set<String> getPermissionsByUsername(String username) {
+        List<String> list = userDao.getPermissionsByUsername(username);
+        Set<String> permissions = new HashSet<String>(list);
+        return permissions;
     }
 
 
