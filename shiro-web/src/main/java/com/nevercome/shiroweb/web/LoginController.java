@@ -59,6 +59,30 @@ public class LoginController {
         return "testRole1 success";
     }
 
+    @RequestMapping(value = "/testRole2", method = RequestMethod.GET)
+    @ResponseBody
+    public String testRole2() {
+        return "testRole2 success";
+    }
+
+    @RequestMapping(value = "/testRole3", method = RequestMethod.GET)
+    @ResponseBody
+    public String testRole3() {
+        return "testRole3 success";
+    }
+
+    @RequestMapping(value = "/testPerms", method = RequestMethod.GET)
+    @ResponseBody
+    public String testPerms() {
+        return "testPerms success";
+    }
+
+    @RequestMapping(value = "/testPerms1", method = RequestMethod.GET)
+    @ResponseBody
+    public String testPerms1() {
+        return "testPerms1 success";
+    }
+
     @RequiresPermissions("admin:update")
     @RequestMapping(value = "/testAdmin", method = RequestMethod.GET)
     @ResponseBody
