@@ -37,7 +37,7 @@ public class CustomRealm extends AuthorizingRealm {
         String username = (String) principalCollection.getPrimaryPrincipal();
 //        从数据库或者缓存中获取角色信息
         Set<String> roles = getRolesByUsername(username);
-        Set<String> permissions = getRolesByUsername(username);
+        Set<String> permissions = getPermissionsByUsername(username);
 
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();

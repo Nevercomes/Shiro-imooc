@@ -13,7 +13,6 @@
     <name>shiro-web</name>
     <artifactId>shiro-web</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -25,6 +24,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>4.3.19.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
@@ -55,6 +55,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>4.3.19.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.1</version>
         </dependency>
 
         <dependency>
