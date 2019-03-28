@@ -37,6 +37,8 @@
     <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
         <!--注入realm-->
         <property name="realm" ref="realm"/>
+        <!--注入sessionManager-->
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <bean class="com.nevercome.shiroweb.realm.CustomRealm" id="realm">
@@ -47,5 +49,11 @@
         <property name="hashAlgorithmName" value="md5"/>
         <property name="hashIterations" value="1" />
     </bean>
+
+    <bean class="com.nevercome.shiroweb.session.CustomSessionManager" id="sessionManager">
+        <property name="sessionDAO" ref="redisSessionDao"/>
+    </bean>
+
+    <bean class="com.nevercome.shiroweb.session.RedisSessionDao" id="redisSessionDao"/>
 
 </beans>
