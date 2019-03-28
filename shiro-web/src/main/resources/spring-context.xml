@@ -41,6 +41,8 @@
         <property name="sessionManager" ref="redisSessionManager" />
         <!--注入cacheManager-->
         <property name="cacheManager" ref="redisCacheManager"/>
+        <!--注入cookieRememberManager-->
+        <property name="rememberMeManager" ref="cookieRememberMeManager" />
     </bean>
 
     <bean class="com.nevercome.shiroweb.realm.CustomRealm" id="realm">
@@ -59,5 +61,13 @@
     <bean class="com.nevercome.shiroweb.session.RedisSessionDao" id="redisSessionDao"/>
 
     <bean class="com.nevercome.shiroweb.cache.RedisCacheManager" id="redisCacheManager"/>
+    
+    <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager" id="cookieRememberMeManager">
+        <property name="cookie" ref="cookie"/>
+    </bean>
 
+    <bean class="org.apache.shiro.web.servlet.SimpleCookie" id="cookie">
+        <constructor-arg value="rememberMe" />
+        <property name="maxAge" value="60000" />
+    </bean>
 </beans>
